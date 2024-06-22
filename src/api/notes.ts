@@ -1,7 +1,7 @@
 
 import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, getFirestore, orderBy, query, updateDoc, where } from "firebase/firestore";
 import { app } from "../lib/firebsae/config";
-import { firestoreNoteToNote, Note } from "../notes/Note";
+import { firestoreNoteToNote, Note } from "../types/Note";
 
 const NOTE_TABLE_NAME = "notes"
 

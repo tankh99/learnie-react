@@ -5,6 +5,7 @@ import ReactDOM from "react-dom/client";
 import RootPage from "./root";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import ErrorPage from './error';
+import NotesPage from "./pages/notes";
 
 const router = createBrowserRouter([
   {
@@ -13,8 +14,8 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage/>,
     children: [
       {
-        path: "/test",
-        element: <div>Test</div>
+        index: true,
+        element: <NotesPage/>
       }
     ]
   },

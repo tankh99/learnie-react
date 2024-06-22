@@ -5,7 +5,11 @@ import ReactDOM from "react-dom/client";
 import RootPage from "./root";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import ErrorPage from './error';
-import NotesPage from "./pages/notes";
+import NotesPage, { loader as notesLoader } from "./pages/notes";
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+
+
+const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {
@@ -15,7 +19,8 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <NotesPage/>
+        element: <NotesPage/>,
+        loader: notesLoader(queryClient),
       }
     ]
   },
@@ -23,6 +28,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <RouterProvider router={router}/>
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router}/>
+    </QueryClientProvider>
   </React.StrictMode>,
 );

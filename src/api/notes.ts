@@ -33,3 +33,17 @@ export async function getNotes() {
   }
   return notes;
 }
+
+export async function getNote(id: string) {
+    try {
+        const notesRef = getNotesRef()
+        const notesDoc = doc(notesRef, id)
+        const note = await getDoc(notesDoc)
+        if (note.exists()) {
+            return firestoreNoteToNote(note)
+        }
+        return null;
+    } catch (err) {
+        console.error(err);
+    }
+}

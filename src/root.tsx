@@ -1,6 +1,6 @@
 import { Outlet, Link } from 'react-router-dom';
 
-function App() {
+function RootPage() {
   return (
     <div>
       Main page and prob navbar?
@@ -10,4 +10,4 @@ function App() {
   );
 }
 
-export default App;
+export default RootPage;

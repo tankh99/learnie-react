@@ -8,7 +8,7 @@ export default function ErrorPage() {
     <div>
       <h1>Oops</h1>
       <p>Something went wrong</p>
-      <Link to={"/test"}>
+      <Link to={"/"}>
         <Button>
           Go Back
         </Button>

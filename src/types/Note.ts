@@ -9,8 +9,8 @@ export type Note = {
     id?: string;
     title: string;
     data: string;
-    createdAt: Date;
-    updatedAt: Date;
+    createdAt?: Date;
+    updatedAt?: Date;
 }
 
 
@@ -24,10 +24,15 @@ export function firestoreNoteToNote(data: DocumentSnapshot<DocumentData, Documen
 }
 
 export function formToNote(data: z.infer<typeof noteFormSchema>, update: boolean = false): Note {
-    return {
+    let note: Note = {
         title: data.title,
         data: data.data,
-        createdAt: new Date(),
         updatedAt: new Date()
     }
+
+    if (!update) {
+        note.createdAt = new Date();
+    }
+
+    return note;
 }

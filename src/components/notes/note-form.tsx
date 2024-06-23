@@ -14,12 +14,16 @@ type P = {
 
 export const noteFormSchema = z.object({
   title: z.string().min(1, "Title shouldn't be empty"),
-  data: z.string()
+  data: z.string(),
+  createdAt: z.date().optional(),
+  updatedAt: z.date().optional(),
 })
 
 const DEFAULT_VALUES: z.infer<typeof noteFormSchema> = {
   title: '',
-  data: '<br>'
+  data: '<br>',
+  createdAt: new Date(),
+  updatedAt: new Date(),
 }
 
 export default function NoteForm({onSubmit, defaultValues}: P) {

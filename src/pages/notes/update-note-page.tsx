@@ -24,7 +24,7 @@ export default function UpdateNotePage() {
   }
 
   const onSubmit = (values: z.infer<typeof noteFormSchema>) => {
-    const note = formToNote(values);
+    const note = formToNote(values, true);
     console.log("values", note)
     updateNoteMutation.mutate(note);
   }

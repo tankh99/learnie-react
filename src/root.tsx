@@ -6,8 +6,7 @@ function RootPage() {
   return (
     <div>
       <Navbar/>
-
-      <div className='px-7 py-4'>
+      <div className='px-6 py-4'>
         <Outlet/>
       </div>
       <Toaster/>

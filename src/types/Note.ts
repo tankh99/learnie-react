@@ -18,6 +18,7 @@ export function firestoreNoteToNote(data: DocumentSnapshot<DocumentData, Documen
     return {
         id: data.id,
         ...data.data(),
+        data: JSON.parse(data.data()?.data as string), // Parse from JSON to Delta
         createdAt: data.data()?.createdAt.toDate(),
         updatedAt: data.data()?.createdAt.toDate(),
     } as Note

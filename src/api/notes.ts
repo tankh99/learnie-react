@@ -42,6 +42,7 @@ export async function getNote(id: string) {
         if (note.exists()) {
             return firestoreNoteToNote(note)
         }
+        
         return null;
     } catch (err) {
         console.error(err);
@@ -54,6 +55,7 @@ export async function createNote(note: Note) {
         const notesRef = getNotesRef()
         const addedNote = await addDoc(notesRef, note);
         console.info(`Added note`, addedNote)
+        return note;
     } catch (err) {
         console.error(err);
     }
@@ -65,6 +67,21 @@ export async function updateNote(id: string, note: Note) {
         const noteDoc = doc(notesRef, id);
         await updateDoc(noteDoc, note);
         console.info(`Updated note ID ${id} successfully`);
+        return note;
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+export async function deleteNote(id: string) {
+
+    try {
+        const notesRef = getNotesRef();
+        const noteDoc = doc(notesRef, id);
+        const note = await getDoc(noteDoc);
+        await deleteDoc(noteDoc)
+        console.info(`Deleted note ID ${id} successfully`);
+        return firestoreNoteToNote(note)
     } catch (err) {
         console.error(err);
     }

@@ -1,5 +1,5 @@
 import { DefinedInitialDataOptions, QueryClient, useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { getNotes, getNote, updateNote, createNote } from "../notes"
+import { getNotes, getNote, updateNote, createNote, deleteNote } from "../notes"
 import { Note } from "@/types/Note"
 import { useNavigate } from "react-router"
 import { useToast } from "@/components/ui/use-toast"
@@ -27,10 +27,10 @@ export function useCreateNote() {
   const toast = useToast();
   return useMutation({
     mutationFn: (note: Note) => createNote(note),
-    onSuccess: () => {
+    onSuccess: (note) => {
       toast.toast({
-        title: "Note created",
-        description: "Note created successfully",
+        title: `${note?.title} created`,
+        description: `${note?.title} created successfully`,
       })
       queryClient.invalidateQueries({queryKey: ["notes"]});
       navigate("/")
@@ -48,13 +48,28 @@ export function useUpdateNote(id: string) {
   const toast = useToast();
   return useMutation({
     mutationFn: (note: Note) => updateNote(id, note),
-    onSuccess: () => {
+    onSuccess: (note) => {
       toast.toast({
         title: "Note updated",
-        description: "Note has been updated successfully",
+        description: `${note?.title} has been updated successfully`,
       })
       queryClient.invalidateQueries({queryKey: ["notes", id]});
       navigate("/")
+    },
+  })
+}
+
+export function useDeleteNote(id: string) {
+  const queryClient = useQueryClient();
+  const toast = useToast();
+  return useMutation({
+    mutationFn: () => deleteNote(id),
+    onSuccess: (note) => {
+      toast.toast({
+        title: "Note deleted",
+        description: `${note?.title} has been deleted successfully`,
+      })
+      queryClient.invalidateQueries({queryKey: ["notes"]});
     },
   })
 }

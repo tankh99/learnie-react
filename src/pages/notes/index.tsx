@@ -22,9 +22,7 @@ export default function NotesPage() {
       </Link>
       {notes.map((note: Note) => {
         return (
-          <Link key={note.id} to={`/notes/${note.id}`}>
-            <NoteListItem note={note} />
-          </Link>
+          <NoteListItem note={note} key={note.id} />
         )
       })}
     </div>

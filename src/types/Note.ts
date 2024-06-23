@@ -3,14 +3,16 @@
 import { noteFormSchema } from "@/components/notes/note-form";
 import { DocumentData, DocumentSnapshot } from "firebase/firestore";
 import { z } from "zod";
+import { NoteRevision } from "./NoteRevision";
 // import { z } from "zod";
 
 export type Note = {
     id?: string;
     title: string;
-    data: string;
+    data: string; // JSON stringified Delta
     createdAt?: Date;
     updatedAt?: Date;
+    noteRevisions?: NoteRevision[];
 }
 
 
@@ -18,7 +20,6 @@ export function firestoreNoteToNote(data: DocumentSnapshot<DocumentData, Documen
     return {
         id: data.id,
         ...data.data(),
-        data: JSON.parse(data.data()?.data as string), // Parse from JSON to Delta
         createdAt: data.data()?.createdAt.toDate(),
         updatedAt: data.data()?.createdAt.toDate(),
     } as Note

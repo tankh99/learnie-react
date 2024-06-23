@@ -18,10 +18,8 @@ export default function NoteListItem({note}: P) {
           <p>{note.title}</p>
         </Link>
         <AlertDialog>
-          <AlertDialogTrigger>
-            <Button variant={"ghost"}>
-              <Trash2 color='red' />
-            </Button>
+          <AlertDialogTrigger className='cursor-pointer hover:bg-gray-100 p-2'>
+            <Trash2 size={24} color='red' />
           </AlertDialogTrigger>
           <AlertDialogContent>
             <AlertDialogHeader>

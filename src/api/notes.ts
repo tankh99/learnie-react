@@ -47,3 +47,25 @@ export async function getNote(id: string) {
         console.error(err);
     }
 }
+
+
+export async function createNote(note: Note) {
+    try {
+        const notesRef = getNotesRef()
+        const addedNote = await addDoc(notesRef, note);
+        console.info(`Added note`, addedNote)
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+export async function updateNote(id: string, note: Note) {
+    try {
+        const notesRef = getNotesRef()
+        const noteDoc = doc(notesRef, id);
+        await updateDoc(noteDoc, note);
+        console.info(`Updated note ID ${id} successfully`);
+    } catch (err) {
+        console.error(err);
+    }
+}

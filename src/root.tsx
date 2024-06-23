@@ -1,6 +1,7 @@
 import { Outlet, Link } from 'react-router-dom';
 import Navbar from './components/navigation/navbar';
 import { Button } from './components/ui/button';
+import { Toaster } from './components/ui/toaster';
 
 function RootPage() {
   return (
@@ -10,6 +11,7 @@ function RootPage() {
       <div className='px-7 py-4'>
         <Outlet/>
       </div>
+      <Toaster/>
     </div>
   );
 }

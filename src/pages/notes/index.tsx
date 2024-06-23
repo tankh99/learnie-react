@@ -7,8 +7,7 @@ import { Link } from 'react-router-dom';
 
 export const loader = (queryClient: QueryClient) => async ({}) => {
   const query = getNotesQuery();
-  return queryClient.getQueryData(query.queryKey) 
-    ?? (await queryClient.fetchQuery(query));
+  return queryClient.ensureQueryData({queryKey: query.queryKey, queryFn: query.queryFn});
 }
 
 export default function NotesPage() {

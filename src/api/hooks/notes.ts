@@ -15,7 +15,8 @@ export const getNotesQuery = (): DefinedInitialDataOptions<Note[], Error> => {
 export const getNoteQuery = (id: string) => {
   return {
     queryKey: ["notes", id],
-    queryFn: () => getNote(id),
+    queryFn: async () => getNote(id),
+    initialDate: null,
   }
 }
 
@@ -42,7 +43,7 @@ export function useCreateNote() {
 }
 
 export function useUpdateNote(id: string) {
-  const queryClient = new QueryClient();
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
   const toast = useToast();
   return useMutation({
@@ -52,7 +53,7 @@ export function useUpdateNote(id: string) {
         title: "Note updated",
         description: "Note has been updated successfully",
       })
-      queryClient.invalidateQueries({queryKey: ["notes"]});
+      queryClient.invalidateQueries({queryKey: ["notes", id]});
       navigate("/")
     },
   })

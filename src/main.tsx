@@ -1,4 +1,5 @@
 import "./globals.css";
+import 'quill/dist/quill.snow.css'; // Add css for snow themes
 
 import React from "react";
 import ReactDOM from "react-dom/client";
@@ -8,6 +9,7 @@ import ErrorPage from './error';
 import NotesPage, { loader as notesLoader } from "./pages/notes";
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import NotePage, { loader as noteLoader } from "./pages/notes/note-page";
+import CreateNotePage from "./pages/notes/create-note-page";
 
 
 const queryClient = new QueryClient();
@@ -22,6 +24,10 @@ const router = createBrowserRouter([
         index: true,
         element: <NotesPage/>,
         loader: notesLoader(queryClient),
+      },
+      {
+        path: "notes/create",
+        element: <CreateNotePage/>,
       },
       {
         path: "notes/:id",

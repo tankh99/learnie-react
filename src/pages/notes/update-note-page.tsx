@@ -1,4 +1,4 @@
-import { getNoteQuery, useUpdateNote } from '@/api/hooks/notes'
+import { getNoteQuery, useUpdateNote } from '@/api/hooks/useNotes'
 import NoteForm, { noteFormSchema } from '@/components/notes/note-form';
 import { formToNote } from '@/types/Note';
 import { QueryClient, useQuery } from '@tanstack/react-query'

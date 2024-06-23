@@ -3,7 +3,7 @@ import { Trash2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '../ui/button';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '../ui/alert-dialog';
-import { useDeleteNote } from '@/api/hooks/notes';
+import { useDeleteNote } from '@/api/hooks/useNotes';
 
 type P = {
   note: Note;

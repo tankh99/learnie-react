@@ -1,4 +1,4 @@
-import { useCreateNote } from '@/api/hooks/notes'
+import { useCreateNote } from '@/api/hooks/useNotes'
 import NoteForm, { noteFormSchema } from '@/components/notes/note-form'
 import { formToNote } from '@/types/Note'
 import { z } from 'zod'

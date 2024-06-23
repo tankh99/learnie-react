@@ -1,4 +1,4 @@
-import { getNotesQuery } from '@/api/hooks/notes'
+import { getNotesQuery } from '@/api/hooks/useNotes'
 import NoteListItem from '@/components/notes/note-list-item';
 import { Button } from '@/components/ui/button';
 import { Note } from '@/types/Note';

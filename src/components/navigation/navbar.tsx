@@ -7,7 +7,7 @@ export default function Navbar() {
   // TODO: This doesn't result in an always correct back logic. To find a better condition
   const canGoBack = location.key !== "default";
   return (
-    <div className="flex items-center justify-between py-2">
+    <div className="flex items-center justify-between py-2 px-2">
       <ChevronLeft 
         className="cursor-pointer" 
         onClick={() => navigate(-1)} 

@@ -9,14 +9,14 @@ type P = {
 export default function NoteEditor({onChange, defaultValue}: P) { 
   const { quill, quillRef } = useQuill();
 
-  // useEffect(() => {
-  //   if (quill) {
-  //     quill.on("text-change", (delta, oldDelta, source) => {
-  //       onChange(quill.root.innerHTML);
-  //     })
-  //     quill.clipboard.dangerouslyPasteHTML(0, defaultValue || '')
-  //   }
-  // }, [quill])
+  useEffect(() => {
+    if (quill) {
+      quill.on("text-change", (delta, oldDelta, source) => {
+        onChange(quill.root.innerHTML);
+      })
+      quill.clipboard.dangerouslyPasteHTML(0, defaultValue || '')
+    }
+  }, [quill])
 
   return (
     <div>

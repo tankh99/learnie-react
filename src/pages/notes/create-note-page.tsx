@@ -1,13 +1,16 @@
 import NoteEditor from '@/components/notes/note-editor'
+import NoteForm, { noteFormSchema } from '@/components/notes/note-form'
 import React from 'react'
+import { z } from 'zod'
 
 export default function CreateNotePage() {
-  const onChange = (e: any) => {
-    console.log(e)
+  const onSubmit = (values: z.infer<typeof noteFormSchema>) => {
+    console.log(values);
   }
+  
   return (
     <div>
-      <NoteEditor onChange={onChange} />
+      <NoteForm onSubmit={onSubmit}/>
     </div>
   )
 }

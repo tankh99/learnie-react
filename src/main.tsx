@@ -10,6 +10,7 @@ import NotesPage, { loader as notesLoader } from "./pages/notes";
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import UpdateNotePage, { loader as noteLoader } from "./pages/notes/update-note-page";
 import CreateNotePage from "./pages/notes/create-note-page";
+import HomePage from "./pages/home-page";
 
 
 const queryClient = new QueryClient();
@@ -22,18 +23,27 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <NotesPage/>,
-        loader: notesLoader(queryClient),
+        element: <HomePage/>
       },
       {
-        path: "notes/create",
-        element: <CreateNotePage/>,
+        path: "notes",
+        children: [
+          {
+            index: true,
+            element: <NotesPage/>,
+            loader: notesLoader(queryClient),
+          },
+          {
+            path: "create",
+            element: <CreateNotePage/>,
+          },
+          {
+            path: ":id",
+            element: <UpdateNotePage/>,
+            loader: noteLoader(queryClient),
+          }
+        ]
       },
-      {
-        path: "notes/:id",
-        element: <UpdateNotePage/>,
-        loader: noteLoader(queryClient),
-      }
     ]
   },
 ])

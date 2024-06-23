@@ -26,6 +26,9 @@ dependencies:
   '@tauri-apps/api':
     specifier: '>=2.0.0-beta.0'
     version: 2.0.0-beta.13
+  '@tauri-apps/plugin-notification':
+    specifier: 2.0.0-beta.5
+    version: 2.0.0-beta.5
   '@tauri-apps/plugin-shell':
     specifier: '>=2.0.0-beta.0'
     version: 2.0.0-beta.6
@@ -1801,6 +1804,12 @@ packages:
       '@tauri-apps/cli-win32-ia32-msvc': 2.0.0-beta.20
       '@tauri-apps/cli-win32-x64-msvc': 2.0.0-beta.20
     dev: true
+
+  /@tauri-apps/plugin-notification@2.0.0-beta.5:
+    resolution: {integrity: sha512-5zYK2aT1ZvR+LnuwsnTvg28iEhI7FiZSPvBqQ8y6fj28T4oIHVox19Pk4YRyTyfyJN1nZclXxVAqWLSXLI9SKQ==}
+    dependencies:
+      '@tauri-apps/api': 2.0.0-beta.13
+    dev: false
 
   /@tauri-apps/plugin-shell@2.0.0-beta.6:
     resolution: {integrity: sha512-g3nM9cQQGl7Iv4MvyFuco/aPTiwOI/MixcoKso3VQIg5Aqd64NqR0r+GfsB0qx52txItqzSXwmeaj1eZjO9Q6Q==}

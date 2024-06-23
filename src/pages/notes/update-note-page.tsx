@@ -13,7 +13,7 @@ export const loader = (queryClient: QueryClient) => ({params}: any) => {
 export default function UpdateNotePage() {
   const params = useParams();
 
-  const {data: note, isPending} = useQuery(getNoteQuery(params.id!))
+  const {data: note } = useQuery(getNoteQuery(params.id!))
 
   const updateNoteMutation = useUpdateNote(params.id!);
 

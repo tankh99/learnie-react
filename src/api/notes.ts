@@ -1,5 +1,5 @@
 
-import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, getFirestore, orderBy, query, updateDoc, where } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, getFirestore, orderBy, query, updateDoc } from "firebase/firestore";
 import { app } from "../lib/firebsae/config";
 import { firestoreNoteToNote, Note } from "../types/Note";
 
@@ -42,7 +42,7 @@ export async function getNote(id: string) {
         if (note.exists()) {
             return firestoreNoteToNote(note)
         }
-        
+
         return null;
     } catch (err) {
         console.error(err);

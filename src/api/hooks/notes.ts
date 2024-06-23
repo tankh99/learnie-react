@@ -1,4 +1,4 @@
-import { DefinedInitialDataOptions, QueryClient, useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { DefinedInitialDataOptions, useMutation, useQueryClient } from "@tanstack/react-query"
 import { getNotes, getNote, updateNote, createNote, deleteNote } from "../notes"
 import { Note } from "@/types/Note"
 import { useNavigate } from "react-router"

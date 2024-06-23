@@ -1,4 +1,4 @@
-import { useLocation, useNavigation, useNavigate } from "react-router"
+import { useLocation, useNavigate } from "react-router"
 import { ChevronLeft } from 'lucide-react'
 
 export default function Navbar() {

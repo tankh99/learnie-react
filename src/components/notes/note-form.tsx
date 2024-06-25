@@ -11,16 +11,16 @@ type P = {
   onSubmit: any;
 }
 
-export const noteFormSchema = z.object({
+const noteFormSchema = z.object({
   title: z.string().min(1, "Title shouldn't be empty"),
   data: z.string(),
   createdAt: z.date().optional(),
   updatedAt: z.date().optional(),
 })
 
-export type NoteForm = z.infer<typeof noteFormSchema>;
+export type NoteFormValues = z.infer<typeof noteFormSchema>;
 
-const DEFAULT_VALUES: NoteForm = {
+const DEFAULT_VALUES: NoteFormValues = {
   title: '',
   data: '',
   createdAt: new Date(),

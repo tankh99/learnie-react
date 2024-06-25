@@ -1,9 +1,8 @@
 
 // import { noteFormSchema } from "@/components/form/note-form";
-import { noteFormSchema } from "@/components/notes/note-form";
 import { DocumentData, DocumentSnapshot } from "firebase/firestore";
-import { z } from "zod";
 import { NoteRevision } from "./NoteRevision";
+import { NoteFormValues } from "@/components/notes/note-form";
 // import { z } from "zod";
 
 export type Note = {
@@ -25,7 +24,7 @@ export function noteFromFirestore(data: DocumentSnapshot<DocumentData, DocumentD
     } as Note
 }
 
-export function formToNote(data: z.infer<typeof noteFormSchema>, update: boolean = false): Note {
+export function formToNote(data: NoteFormValues, update: boolean = false): Note {
     let note: Note = {
         title: data.title,
         data: data.data,

@@ -19,6 +19,13 @@ export function noteFromFirestore(data: DocumentSnapshot<DocumentData, DocumentD
     return {
         id: data.id,
         ...data.data(),
+        noteRevisions: data.data()?.noteRevisions?.map((revision: any) => {
+            const noteRevision: NoteRevision = {
+                data: revision.data,
+                revisionTime: revision.revisionTime.toDate(),
+            }
+            return noteRevision
+        }),
         createdAt: data.data()?.createdAt.toDate(),
         updatedAt: data.data()?.createdAt.toDate(),
     } as Note

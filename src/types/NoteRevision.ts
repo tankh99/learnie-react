@@ -1,3 +1,4 @@
+import { NoteForm } from "@/components/notes/note-form";
 import { DocumentSnapshot, DocumentData } from "firebase/firestore";
 
 /**
@@ -17,4 +18,11 @@ export function noteRevisionFromFirestore(data: DocumentSnapshot<DocumentData, D
         ...data.data(),
         revisionTime: data.data()?.revisionTime.toDate()
     } as NoteRevision
+}
+
+export function formToNoteRevision(data: NoteForm): NoteRevision {
+    return {
+        data: JSON.stringify(data.data),
+        revisionTime: new Date()
+    }
 }

@@ -1,6 +1,7 @@
 import { useCreateNote } from '@/api/hooks/useNotes'
 import NoteForm, { noteFormSchema } from '@/components/notes/note-form'
 import { formToNote } from '@/types/Note'
+import { formToNoteRevision, NoteRevision } from '@/types/NoteRevision';
 import { z } from 'zod'
 
 export default function CreateNotePage() {
@@ -8,7 +9,8 @@ export default function CreateNotePage() {
 
   const onSubmit = (values: z.infer<typeof noteFormSchema>) => {
     const note = formToNote(values)
-    console.log("adding note", note);
+    const noteRevision: NoteRevision = formToNoteRevision(values);
+    note.noteRevisions = [noteRevision];
     createNoteMutation.mutate(note);
   }
 

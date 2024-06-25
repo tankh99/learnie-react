@@ -18,9 +18,11 @@ export const noteFormSchema = z.object({
   updatedAt: z.date().optional(),
 })
 
-const DEFAULT_VALUES: z.infer<typeof noteFormSchema> = {
+export type NoteForm = z.infer<typeof noteFormSchema>;
+
+const DEFAULT_VALUES: NoteForm = {
   title: '',
-  data: '<br>',
+  data: '',
   createdAt: new Date(),
   updatedAt: new Date(),
 }

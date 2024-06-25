@@ -16,7 +16,7 @@ export type Note = {
 }
 
 
-export function firestoreNoteToNote(data: DocumentSnapshot<DocumentData, DocumentData>): Note {
+export function noteFromFirestore(data: DocumentSnapshot<DocumentData, DocumentData>): Note {
     return {
         id: data.id,
         ...data.data(),

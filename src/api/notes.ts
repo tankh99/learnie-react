@@ -1,18 +1,14 @@
 
 import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, getFirestore, orderBy, query, updateDoc } from "firebase/firestore";
 import { app } from "../lib/firebsae/config";
-import { firestoreNoteToNote, Note } from "../types/Note";
+import { noteFromFirestore, Note } from "../types/Note";
 
 const NOTE_TABLE_NAME = "notes"
 
-export function getNotesRef() {
-    try {
-        const firestore = getFirestore(app);
-        const notesRef = collection(firestore, NOTE_TABLE_NAME);
-        return notesRef
-    } catch (err) {
-        throw err;
-    }
+function getNotesRef() {
+    const firestore = getFirestore(app);
+    const notesRef = collection(firestore, NOTE_TABLE_NAME);
+    return notesRef
 }
 
 
@@ -26,7 +22,7 @@ export async function getNotes() {
           return [];
       }
       querySnap.docs.map(doc => {
-          notes.push(firestoreNoteToNote(doc));
+          notes.push(noteFromFirestore(doc));
       });
   } catch (err) {
       console.error(err);
@@ -40,13 +36,12 @@ export async function getNote(id: string) {
         const notesDoc = doc(notesRef, id)
         const note = await getDoc(notesDoc)
         if (note.exists()) {
-            return firestoreNoteToNote(note)
+            return noteFromFirestore(note)
         }
-
-        return null;
     } catch (err) {
         console.error(err);
     }
+    return null;
 }
 
 
@@ -81,7 +76,7 @@ export async function deleteNote(id: string) {
         const note = await getDoc(noteDoc);
         await deleteDoc(noteDoc)
         console.info(`Deleted note ID ${id} successfully`);
-        return firestoreNoteToNote(note)
+        return noteFromFirestore(note)
     } catch (err) {
         console.error(err);
     }

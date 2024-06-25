@@ -1,6 +1,6 @@
 import { app } from "@/lib/firebsae/config"
 import { noteRevisionFromFirestore, NoteRevision } from "@/types/NoteRevision";
-import { collection, doc, getDoc, getDocs, getFirestore, orderBy, query } from "firebase/firestore"
+import { addDoc, collection, doc, getDoc, getDocs, getFirestore, orderBy, query } from "firebase/firestore"
 
 
 const NOTE_REVISION_TABLE_NAME = "note_revisions"
@@ -41,4 +41,16 @@ export async function getNoteRevision(id: string) {
     console.error(err);
   }
   return null;
+}
+
+export async function createNoteRevision(noteRevision: NoteRevision) {
+  try {
+    const noteRevisionsRef = getNoteRevisionRef()
+    const addedNoteRevision = await addDoc(noteRevisionsRef, noteRevision);
+    console.info(`Added note revision`, addedNoteRevision)
+    return noteRevision;
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
 }

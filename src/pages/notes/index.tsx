@@ -8,7 +8,7 @@ import { isPermissionGranted, requestPermission, sendNotification } from '@tauri
 
 export const loader = (queryClient: QueryClient) => async ({}) => {
   const query = getNotesQuery();
-  return queryClient.ensureQueryData({queryKey: query.queryKey, queryFn: query.queryFn});
+  return queryClient.ensureQueryData(query);
 }
 
 export default function NotesPage() {

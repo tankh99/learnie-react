@@ -7,7 +7,7 @@ import { useParams } from 'react-router';
 
 export const loader = (queryClient: QueryClient) => ({params}: any) => {
   const query = getNoteQuery(params.id);
-  return queryClient.ensureQueryData({queryKey: query.queryKey, queryFn: query.queryFn});
+  return queryClient.ensureQueryData(query);
 }
 
 export default function UpdateNotePage() {

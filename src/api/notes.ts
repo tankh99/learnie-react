@@ -48,11 +48,12 @@ export async function getNote(id: string) {
 export async function createNote(note: Note) {
     try {
         const notesRef = getNotesRef()
-        const addedNote = await addDoc(notesRef, note);
-        console.info(`Added note`, addedNote)
-        return note;
+        const addedNoteRef = await addDoc(notesRef, note);
+        const addedNote = await getDoc(addedNoteRef);
+        return noteFromFirestore(addedNote);
     } catch (err) {
         console.error(err);
+        return null;
     }
 }
 

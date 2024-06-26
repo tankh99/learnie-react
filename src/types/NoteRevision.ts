@@ -10,6 +10,7 @@ export type NoteRevision = {
     id?: string;
     data: string; // What was changed, in delta
     revisionTime: Date;
+    noteId: string;
 }
 
 export function noteRevisionFromFirestore(data: DocumentSnapshot<DocumentData, DocumentData>): NoteRevision {
@@ -20,9 +21,10 @@ export function noteRevisionFromFirestore(data: DocumentSnapshot<DocumentData, D
     } as NoteRevision
 }
 
-export function formToNoteRevision(data: NoteFormValues): NoteRevision {
+export function formToNoteRevision(data: NoteFormValues, noteId: string): NoteRevision {
     return {
         data: JSON.stringify(data.data),
-        revisionTime: new Date()
+        revisionTime: new Date(),
+        noteId,
     }
 }

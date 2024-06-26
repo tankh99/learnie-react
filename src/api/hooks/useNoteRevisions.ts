@@ -1,6 +1,6 @@
 import { NoteRevision } from "@/types/NoteRevision";
-import { DefinedInitialDataOptions,  } from "@tanstack/react-query";
-import { getNoteRevision, getNoteRevisions, getRecentlyChangedNoteRevisions } from "../noteRevisions";
+import { DefinedInitialDataOptions, useMutation, useQueryClient,  } from "@tanstack/react-query";
+import { createNoteRevision, getNoteRevision, getNoteRevisions, getRecentlyChangedNoteRevisions } from "../noteRevisions";
 
 export const getNoteRevisionsQuery = (): DefinedInitialDataOptions<NoteRevision[], Error> => {
   return {
@@ -24,4 +24,14 @@ export const getRecentlyChangedNoteRevisionsQuery = (): DefinedInitialDataOption
     queryFn: getRecentlyChangedNoteRevisions,
     initialData: []
   };
+}
+
+export const useCreateNoteRevision = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (noteRevision: NoteRevision) => createNoteRevision(noteRevision),
+    onSuccess: (noteRevision) => {
+      queryClient.invalidateQueries({queryKey: ["noteRevisions"]});
+    }
+  }) 
 }

@@ -1,6 +1,7 @@
 import { app } from "@/lib/firebsae/config"
 import { noteRevisionFromFirestore, NoteRevision } from "@/types/NoteRevision";
 import { addDoc, collection, doc, getDoc, getDocs, getFirestore, orderBy, query, updateDoc, where } from "firebase/firestore"
+import { getNote } from "./notes";
 
 
 const NOTE_REVISION_TABLE_NAME = "note_revisions"
@@ -20,8 +21,13 @@ export async function getNoteRevisions() {
     if (querySnap.empty) {
       return [];
     }
-    querySnap.docs.map(doc => {
-      noteRevisions.push(noteRevisionFromFirestore(doc))
+    querySnap.docs.map(async (doc) => {
+      let noteRevision = noteRevisionFromFirestore(doc)
+      const note = await getNote(noteRevision.noteId)
+      if (note) {
+        noteRevision.note = note
+      }
+      noteRevisions.push(noteRevision)
     })
   } catch (err) {
     console.error(err);
@@ -54,9 +60,18 @@ export async function getRecentlyChangedNoteRevisions() {
     if (querySnap.empty) {
       return [];
     }
-    return querySnap.docs.map(doc => {
-      return noteRevisionFromFirestore(doc);
-    })
+
+    const noteRevisions: NoteRevision[] = []
+    for (const doc of querySnap.docs) {
+      let noteRevision = noteRevisionFromFirestore(doc)
+      const note = await getNote(noteRevision.noteId)
+      if (note) {
+        noteRevision.note = note
+      }
+      noteRevisions.push(noteRevision)
+    }
+
+    return noteRevisions;
   } catch (err) {
     console.error(err);
     return []

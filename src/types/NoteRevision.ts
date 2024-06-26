@@ -1,5 +1,6 @@
 import { NoteFormValues } from "@/components/notes/note-form";
 import { DocumentSnapshot, DocumentData } from "firebase/firestore";
+import { Note } from "./Note";
 
 /**
  * Only one per day, to avoid clogging up DB.
@@ -11,6 +12,7 @@ export type NoteRevision = {
     data: string; // What was changed, in delta
     revisionTime: Date;
     noteId: string;
+    note?: Note;
 }
 
 export function noteRevisionFromFirestore(data: DocumentSnapshot<DocumentData, DocumentData>): NoteRevision {

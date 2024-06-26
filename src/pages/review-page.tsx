@@ -10,13 +10,13 @@ export const loader = (queryClient: QueryClient) => async ({}) => {
 
 
 export default function ReviewPage() {
-  const {data} = useQuery(getRecentlyChangedNoteRevisionsQuery());
+  const {data: noteRevisions} = useQuery(getRecentlyChangedNoteRevisionsQuery());
 
   return (
     <div>
       <h1>Review Page</h1>
       <div>
-        {data?.map((noteRevision) => (
+        {noteRevisions?.map((noteRevision) => (
           <Link key={noteRevision.id} to={`/notes/${noteRevision.noteId}`}>
             <ReviewListItem key={noteRevision.id} noteRevision={noteRevision}/>
           </Link>

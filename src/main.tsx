@@ -9,7 +9,7 @@ import ErrorPage from './error';
 import NotesPage, { loader as notesLoader } from "./pages/notes";
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import UpdateNotePage, { loader as noteLoader } from "./pages/notes/update-note-page";
-import { loader as reviewLoader } from "./pages/review-page";
+import ReviewPage, { loader as reviewLoader } from "./pages/review-page";
 import CreateNotePage from "./pages/notes/create-note-page";
 import HomePage from "./pages/home-page";
 
@@ -50,7 +50,8 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            loader: reviewLoader
+            element: <ReviewPage/>,
+            loader: reviewLoader(queryClient)
           }
         ]
       }

@@ -1,6 +1,6 @@
 import { app } from "@/lib/firebsae/config"
 import { noteRevisionFromFirestore, NoteRevision } from "@/types/NoteRevision";
-import { addDoc, collection, doc, getDoc, getDocs, getFirestore, orderBy, query } from "firebase/firestore"
+import { addDoc, collection, doc, getDoc, getDocs, getFirestore, orderBy, query, where } from "firebase/firestore"
 
 
 const NOTE_REVISION_TABLE_NAME = "note_revisions"
@@ -32,8 +32,8 @@ export async function getNoteRevisions() {
 export async function getNoteRevision(id: string) {
   try {
     const noteRevisionsRef = getNoteRevisionRef();
-    const notesDoc = doc(noteRevisionsRef, id)
-    const note = await getDoc(notesDoc)
+    const noteRevisionDoc = doc(noteRevisionsRef, id)
+    const note = await getDoc(noteRevisionDoc)
     if (note.exists()) {
         return noteRevisionFromFirestore(note)
     }
@@ -41,6 +41,26 @@ export async function getNoteRevision(id: string) {
     console.error(err);
   }
   return null;
+}
+
+export async function getRecentlyChangedNoteRevisions() {
+  try {
+    const noteRevisionsRef = getNoteRevisionRef();
+    const noteRevisionQuery = query(noteRevisionsRef, 
+      where('revisionTime', '>', new Date(Date.now() - 1000 * 60 * 60 * 24)),
+      orderBy('revisionTime', 'desc'),
+    );
+    const querySnap = await getDocs(noteRevisionQuery);
+    if (querySnap.empty) {
+      return [];
+    }
+    return querySnap.docs.map(doc => {
+      return noteRevisionFromFirestore(doc);
+    })
+  } catch (err) {
+    console.error(err);
+    return []
+  }
 }
 
 export async function createNoteRevision(noteRevision: NoteRevision) {

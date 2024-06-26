@@ -1,6 +1,6 @@
 import { NoteRevision } from "@/types/NoteRevision";
-import { DefinedInitialDataOptions } from "@tanstack/react-query";
-import { getNoteRevision, getNoteRevisions } from "../noteRevisions";
+import { DefinedInitialDataOptions,  } from "@tanstack/react-query";
+import { getNoteRevision, getNoteRevisions, getRecentlyChangedNoteRevisions } from "../noteRevisions";
 
 export const getNoteRevisionsQuery = (): DefinedInitialDataOptions<NoteRevision[], Error> => {
   return {
@@ -18,3 +18,10 @@ export const getNoteRevisionQuery = (id: string): DefinedInitialDataOptions<Note
   }
 }
 
+export const getRecentlyChangedNoteRevisionsQuery = (): DefinedInitialDataOptions<NoteRevision[], Error> => {
+  return {
+    queryKey: ["noteRevisions", "recentlyChanged"],
+    queryFn: getRecentlyChangedNoteRevisions,
+    initialData: []
+  };
+}

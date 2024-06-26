@@ -9,6 +9,9 @@ export default function HomePage() {
         <Link to="/notes">
           <Button>Notes</Button>
         </Link>
+        <Link to="/review">
+          <Button>Review</Button>
+        </Link>
       </div>
     </div>
   )

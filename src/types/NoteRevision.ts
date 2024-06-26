@@ -23,7 +23,7 @@ export function noteRevisionFromFirestore(data: DocumentSnapshot<DocumentData, D
 
 export function formToNoteRevision(data: NoteFormValues, noteId: string): NoteRevision {
     return {
-        data: JSON.stringify(data.data),
+        data: data.data ? JSON.stringify(data.data) : "", // Because JSON.stringify "" would return """"
         revisionTime: new Date(),
         noteId,
     }

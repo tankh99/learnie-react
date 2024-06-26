@@ -5,7 +5,7 @@ import { noteFromFirestore, Note } from "../types/Note";
 
 const NOTE_TABLE_NAME = "notes"
 
-function getNotesRef() {
+export function getNotesRef() {
     const firestore = getFirestore(app);
     const notesRef = collection(firestore, NOTE_TABLE_NAME);
     return notesRef

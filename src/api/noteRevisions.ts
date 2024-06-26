@@ -1,6 +1,6 @@
 import { app } from "@/lib/firebsae/config"
 import { noteRevisionFromFirestore, NoteRevision } from "@/types/NoteRevision";
-import { addDoc, collection, doc, getDoc, getDocs, getFirestore, orderBy, query, where } from "firebase/firestore"
+import { addDoc, collection, doc, getDoc, getDocs, getFirestore, orderBy, query, updateDoc, where } from "firebase/firestore"
 
 
 const NOTE_REVISION_TABLE_NAME = "note_revisions"
@@ -66,11 +66,61 @@ export async function getRecentlyChangedNoteRevisions() {
 export async function createNoteRevision(noteRevision: NoteRevision) {
   try {
     const noteRevisionsRef = getNoteRevisionRef()
-    const addedNoteRevision = await addDoc(noteRevisionsRef, noteRevision);
-    console.info(`Added note revision`, addedNoteRevision)
-    return noteRevision;
+    const addedNoteRevisionRef = await addDoc(noteRevisionsRef, noteRevision);
+    const addedNoteRevision = await getDoc(addedNoteRevisionRef);
+    return noteRevisionFromFirestore(addedNoteRevision);
   } catch (err) {
     console.error(err);
     return null;
+  }
+}
+
+// Private method since we likely don't want t oexpose this
+async function updateNoteRevision(id: string, noteRevision: NoteRevision) {
+  try {
+      const noteRevisionsRef = getNoteRevisionRef()
+      const noteRevisionDoc = doc(noteRevisionsRef, id);
+      await updateDoc(noteRevisionDoc, noteRevision);
+      
+      console.info(`Updated note revision ID ${id} successfully`, noteRevision);
+      return noteRevision;
+  } catch (err) {
+      console.error(err);
+  }
+}
+
+/**
+ * 1. Create - Cretes new note revision only when:
+ *   1. No note histories exist
+ *   2. The last note history was more than a day ago
+ * 2. Update - Updates only when the last note history was created within the last day. 
+ *   - Then update the revisionTime
+ * 
+ * @param noteId Note ID to create or update note revision for. We assume that the logic to check for the noteId is already
+ * implemented inside the react-query functions
+ * @param noteRevision 
+ * @returns 
+ */
+export async function createOrUpdateNoteRevision(noteId: string, noteRevision: NoteRevision) {
+  try {
+      const noteRevisionsRef = getNoteRevisionRef()
+
+      const noteRevisionQuery = query(noteRevisionsRef, 
+          where('noteId', '==', noteId),
+          orderBy('revisionTime', 'desc'),
+      );
+      const querySnap = await getDocs(noteRevisionQuery);
+      if (querySnap.empty) {
+        console.info("Creating new note revision", noteRevision)
+          return createNoteRevision(noteRevision);
+      }
+      let lastNoteRevision = noteRevisionFromFirestore(querySnap.docs[0]);
+      lastNoteRevision.revisionTime = new Date();
+      console.log("updating with note reivison", noteRevision);
+      await updateNoteRevision(lastNoteRevision.id!, noteRevision)
+
+      return lastNoteRevision;
+  } catch (err) {
+      console.error(err);
   }
 }

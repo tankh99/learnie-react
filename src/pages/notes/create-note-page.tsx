@@ -13,8 +13,11 @@ export default function CreateNotePage() {
     const note = formToNote(values)
     const addedNote = await createNoteMutation.mutateAsync(note);
     if (!createNoteMutation.isError) {
-      // Adding note revision to the note
-      const noteRevision = formToNoteRevision(values, addedNote!.id!)
+      // We set to null because we want to see the diff of the note
+      let noteRevision = formToNoteRevision({
+        ...values,
+        data: ""
+      }, addedNote!.id!)
       createNoteRevisionMutation.mutate(noteRevision);
     }
   }

@@ -17,9 +17,7 @@ export default function ReviewPage() {
       <h1>Review Page</h1>
       <div>
         {noteRevisions?.map((noteRevision) => (
-          <Link key={noteRevision.id} to={`/notes/${noteRevision.noteId}`}>
-            <ReviewListItem key={noteRevision.id} noteRevision={noteRevision}/>
-          </Link>
+          <ReviewListItem key={noteRevision.id} noteRevision={noteRevision}/>
         ))}
       </div>
     </div>

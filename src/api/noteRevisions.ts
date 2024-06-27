@@ -2,6 +2,7 @@ import { app } from "@/lib/firebsae/config"
 import { noteRevisionFromFirestore, NoteRevision } from "@/types/NoteRevision";
 import { addDoc, collection, doc, getDoc, getDocs, getFirestore, orderBy, query, updateDoc, where } from "firebase/firestore"
 import { getNote } from "./notes";
+import { isToday } from "@/lib/date";
 
 
 const NOTE_REVISION_TABLE_NAME = "note_revisions"
@@ -90,26 +91,11 @@ export async function createNoteRevision(noteRevision: NoteRevision) {
   }
 }
 
-// Private method since we likely don't want t oexpose this
-async function updateNoteRevision(id: string, noteRevision: NoteRevision) {
-  try {
-      const noteRevisionsRef = getNoteRevisionRef()
-      const noteRevisionDoc = doc(noteRevisionsRef, id);
-      await updateDoc(noteRevisionDoc, noteRevision);
-      
-      console.info(`Updated note revision ID ${id} successfully`, noteRevision);
-      return noteRevision;
-  } catch (err) {
-      console.error(err);
-  }
-}
-
 /**
  * 1. Create - Cretes new note revision only when:
  *   1. No note histories exist
  *   2. The last note history was more than a day ago
- * 2. Update - Updates only when the last note history was created within the last day. 
- *   - Then update the revisionTime
+ * 2. Update - We actually do not update the note revision, but create a new one. This is to keep track of the changes
  * 
  * @param noteId Note ID to create or update note revision for. We assume that the logic to check for the noteId is already
  * implemented inside the react-query functions
@@ -128,13 +114,14 @@ export async function createOrUpdateNoteRevision(noteId: string, noteRevision: N
       if (querySnap.empty) {
         console.info("Creating new note revision", noteRevision)
           return createNoteRevision(noteRevision);
-      }
-      let lastNoteRevision = noteRevisionFromFirestore(querySnap.docs[0]);
-      lastNoteRevision.revisionTime = new Date();
-      console.log("updating with note reivison", noteRevision);
-      await updateNoteRevision(lastNoteRevision.id!, noteRevision)
+      } 
 
-      return lastNoteRevision;
+      let lastNoteRevision = noteRevisionFromFirestore(querySnap.docs[0]);
+      if (!isToday(lastNoteRevision.revisionTime, new Date())) {
+        return createNoteRevision(noteRevision);
+      }
+      
+      return noteRevision;
   } catch (err) {
       console.error(err);
   }

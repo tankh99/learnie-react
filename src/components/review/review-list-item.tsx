@@ -24,7 +24,7 @@ export default function ReviewListItem({noteRevision}: P) {
   return (
     <div>
       <Link to={`/notes/${noteRevision.note!.id}`}>
-        <div>{noteRevision.note?.title}</div>
+        <p className="text-lg font-bold ">{noteRevision.note?.title}</p>
       </Link>
       <div dangerouslySetInnerHTML={{__html: formatDiff(noteRevision.data, noteRevision.note?.data!)}}></div>
     </div>

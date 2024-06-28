@@ -28,14 +28,12 @@ export default function UpdateNotePage() {
 
   const onSubmit = async (values: NoteFormValues) => {
     const newNote = formToNote(values, true);
-    // const newDelta = new Delta(JSON.parse(values.data));
-    // const oldDelta = note.data ? new Delta(JSON.parse(note.data)) : new Delta();
-    // const diff = newDelta.diff(oldDelta);
-    
-    // console.log(diff);
     await updateNoteMutation.mutateAsync(newNote);
 
-    const noteRevision: NoteRevision = formToNoteRevision(values, params.id!)
+    const noteRevision: NoteRevision = formToNoteRevision({
+      ...values,
+      data: note.data,
+    }, params.id!)
     await createOrUpdateNoteRevisionMutation.mutateAsync(noteRevision)
 
   }

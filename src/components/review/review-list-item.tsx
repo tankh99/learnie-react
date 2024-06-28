@@ -1,3 +1,4 @@
+import { deltaToHTML, getStyledQuillDiff } from "@/lib/quill-utils";
 import { NoteRevision } from "@/types/NoteRevision";
 import { Delta } from "quill/core";
 import { Link } from "react-router-dom";
@@ -13,26 +14,16 @@ export default function ReviewListItem({noteRevision}: P) {
    * @param newDelta Usually the note's current delta
    */
   const formatDiff = (src: string, curr: string) => {
-    const srcDelta = src ? JSON.parse(src) : ""; // We use this conditional because JSON.parse("") results in error
-    const currentDelta = curr ? JSON.parse(curr) : "";
-    const diff = new Delta(srcDelta).diff(new Delta(currentDelta))
-    
-    let html = `<p></p>`
-    for (const op of diff.ops) {
-      if (op.insert) {
-        html += `<p style="color: green">${op.insert}</p>`
-      } else if (op.delete) {
-        html += `<p style="color: red">${op.delete}</p>`
-      } else if (op.retain) {
-        html += `<p>${op.retain}</p>`
-      }
-    }
-    return html
+    const srcDelta = src ? new Delta(JSON.parse(src)) : new Delta();
+    const currDelta = curr ? new Delta(JSON.parse(curr)) : new Delta();
+    const diffDelta = getStyledQuillDiff(srcDelta, currDelta)
+    const formattedHTML = deltaToHTML(diffDelta)
+    return formattedHTML
   }
 
   return (
     <div>
-      <Link to={`/notes/${noteRevision.id}`}>
+      <Link to={`/notes/${noteRevision.note!.id}`}>
         <div>{noteRevision.note?.title}</div>
       </Link>
       <div dangerouslySetInnerHTML={{__html: formatDiff(noteRevision.data, noteRevision.note?.data!)}}></div>

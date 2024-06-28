@@ -1,0 +1,1 @@
+- [ ] Bug: Creating/updating a note intereferes with the history stack

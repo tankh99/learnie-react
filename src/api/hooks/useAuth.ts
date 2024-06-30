@@ -2,10 +2,10 @@ import { useToast } from "@/components/ui/use-toast";
 import { auth } from "@/lib/firebsae/config";
 import { LoginFormValues } from "@/pages/auth/components/login-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { useNavigate } from "react-router";
 
 export const useLogin = () => {
-  const queryClient = useQueryClient();
   const { toast } = useToast();
   return useMutation({
     mutationFn: async (values: LoginFormValues) => {
@@ -45,6 +45,29 @@ export const useSignup = () => {
         description: err.message,
         variant: "destructive"
       })
+    }
+  })
+}
+
+export const useSignout = () => {
+  const {toast} = useToast();
+  const navigate = useNavigate();
+  return useMutation({
+    mutationFn: async () => {
+      await signOut(auth);
+      toast({
+        title: "Success",
+        description: "Signed out successfully",
+        variant: "success"
+      })
+      navigate("/login");
+    },
+    onError: (err: any) => {
+      toast({
+        title: "Error",
+        description: err.message,
+        variant: "destructive"
+      }) 
     }
   })
 }

@@ -12,7 +12,7 @@ import UpdateNotePage, { loader as noteLoader } from "./pages/notes/update-note-
 import ReviewPage, { loader as reviewLoader } from "./pages/review-page";
 import CreateNotePage from "./pages/notes/create-note-page";
 import HomePage from "./pages/home-page";
-import LoginPage from "./pages/login-page";
+import LoginPage from "./pages/auth/login-page";
 
 
 const queryClient = new QueryClient();

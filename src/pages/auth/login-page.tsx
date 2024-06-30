@@ -1,7 +1,8 @@
 import { auth } from "@/lib/firebsae/config";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import LoginForm from "./login/login-form";
+import LoginForm from "./login-form";
 import { useToast } from "@/components/ui/use-toast";
+import { Link } from "react-router-dom";
 
 export default function LoginPage() {
   const {toast} = useToast()
@@ -25,6 +26,9 @@ export default function LoginPage() {
         <h3 className="font-bold text-xl">Login</h3>
         <br/>
         <LoginForm onSubmit={login} />
+        <p>Don't have an account? 
+          <Link to="/signup">Sign up here</Link>
+        </p>
       </div>
     </div>
   )

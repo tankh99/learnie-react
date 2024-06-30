@@ -11,7 +11,7 @@
   "app": {
     "windows": [
       {
-        "title": "learnie-react",
+        "title": "Learnie",
         "width": 800,
         "height": 600
       }

@@ -7,6 +7,7 @@ import { useNavigate } from "react-router";
 
 export const useLogin = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
   return useMutation({
     mutationFn: async (values: LoginFormValues) => {
       const signinRes = await signInWithEmailAndPassword(auth, values.email, values.password);
@@ -15,6 +16,7 @@ export const useLogin = () => {
         description: "Logged in successfully",
         variant: "success"
       })
+      navigate("/")
       return signinRes;
     },
     onError: (err) => {
@@ -29,6 +31,7 @@ export const useLogin = () => {
 
 export const useSignup = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
   return useMutation({
     mutationFn: async (values: any) => {
       const signupRes = await createUserWithEmailAndPassword(auth, values.email, values.password);
@@ -37,6 +40,7 @@ export const useSignup = () => {
         description: "Account created successfully",
         variant: "success"
       })
+      navigate("/login")
       return signupRes;
     },
     onError: (err) => {

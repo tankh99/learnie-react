@@ -11,9 +11,10 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import UpdateNotePage, { loader as noteLoader } from "./pages/notes/update-note-page";
 import ReviewPage, { loader as reviewLoader } from "./pages/review-page";
 import CreateNotePage from "./pages/notes/create-note-page";
-import HomePage from "./pages/home-page";
 import LoginPage from "./pages/auth/login-page";
 import SignupPage from "./pages/auth/signup-page";
+import ProtectedRoute from "./pages/auth/components/routes/protected-route";
+import HomePage from "./pages/home-page";
 
 
 const queryClient = new QueryClient();
@@ -25,45 +26,51 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage/>,
     children: [
       {
-        index: true,
-        element: <HomePage/>
-      },
-      {
-        path: "notes",
-        children: [
-          {
-            index: true,
-            element: <NotesPage/>,
-            loader: notesLoader(queryClient),
-          },
-          {
-            path: "create",
-            element: <CreateNotePage/>,
-          },
-          {
-            path: ":id",
-            element: <UpdateNotePage/>,
-            loader: noteLoader(queryClient),
-          }
-        ]
-      },
-      {
-        path: "review",
-        children: [
-          {
-            index: true,
-            element: <ReviewPage/>,
-            loader: reviewLoader(queryClient)
-          }
-        ]
-      },
-      {
         path: "login",
         element: <LoginPage/>
       },
       {
         path: "signup",
         element: <SignupPage/>
+      },
+      {
+        element: <ProtectedRoute />,
+        children: [
+          {
+            index: true,
+            element: <HomePage/>
+          },
+          {
+            path: "notes",
+            children: [
+              {
+                index: true,
+                element: <NotesPage/>,
+                loader: notesLoader(queryClient),
+              },
+              {
+                path: "create",
+                element: <CreateNotePage/>,
+              },
+              {
+                path: ":id",
+                element: <UpdateNotePage/>,
+                loader: noteLoader(queryClient),
+    
+              }
+            ]
+          },
+          {
+            path: "review",
+            children: [
+              {
+                index: true,
+                element: <ReviewPage/>,
+                loader: reviewLoader(queryClient),
+              }
+            ]
+          },
+        ]
       },
     ]
   },

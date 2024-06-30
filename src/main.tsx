@@ -13,6 +13,7 @@ import ReviewPage, { loader as reviewLoader } from "./pages/review-page";
 import CreateNotePage from "./pages/notes/create-note-page";
 import HomePage from "./pages/home-page";
 import LoginPage from "./pages/auth/login-page";
+import SignupPage from "./pages/auth/signup-page";
 
 
 const queryClient = new QueryClient();
@@ -59,7 +60,11 @@ const router = createBrowserRouter([
       {
         path: "login",
         element: <LoginPage/>
-      }
+      },
+      {
+        path: "signup",
+        element: <SignupPage/>
+      },
     ]
   },
 ])

@@ -1,4 +1,3 @@
-import React from 'react'
 import SignupForm, { SignupFormValues } from './components/signup-form'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '@/lib/firebsae/config'
@@ -12,6 +11,7 @@ export default function SignupPage() {
     try {
       const user = await createUserWithEmailAndPassword(auth, values.email, values.password)
       toast({
+        variant:"success",
         title: "Success",
         description: "Account created successfully"
       })

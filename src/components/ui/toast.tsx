@@ -1,7 +1,7 @@
 import * as React from "react"
 import * as ToastPrimitives from "@radix-ui/react-toast"
 import { cva, type VariantProps } from "class-variance-authority"
-import { X } from "lucide-react"
+import { X, AlertCircleIcon, CheckCircle2Icon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
@@ -30,6 +30,7 @@ const toastVariants = cva(
         default: "border bg-background text-foreground",
         destructive:
           "destructive group border-destructive bg-destructive text-destructive-foreground",
+        success: "success group border-success bg-success-foreground",
       },
     },
     defaultVariants: {
@@ -46,9 +47,13 @@ const Toast = React.forwardRef<
   return (
     <ToastPrimitives.Root
       ref={ref}
-      className={cn(toastVariants({ variant }), className)}
+      className={cn(toastVariants({ variant }), className, "justify-start")}
       {...props}
-    />
+    >
+      <AlertCircleIcon className="group-[.warning]:text-warning group-[.destructive]:text-destructive group-[.info]:text-info group-[.success]:hidden" />
+      <CheckCircle2Icon className="group-[.warning]:hidden group-[.destructive]:hidden group-[.info]:hidden group-[.success]:text-success" />
+      {props.children}
+    </ToastPrimitives.Root>
   )
 })
 Toast.displayName = ToastPrimitives.Root.displayName

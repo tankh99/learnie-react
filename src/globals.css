@@ -25,8 +25,17 @@
       --accent: 210 40% 96.1%;
       --accent-foreground: 222.2 47.4% 11.2%;
 
-      --destructive: 0 84.2% 60.2%;
-      --destructive-foreground: 210 40% 98%;
+      --destructive: 0 77.8% 50.4%; /* #dc2626 converted to HSL */
+      --destructive-foreground: 0 100% 95.7%; /* #fef2f2 converted to HSL */
+      
+      --warning: 36 90% 58%; /* #f59e0b converted to HSL */
+      --warning-foreground: 24 100% 96.9%; /* #fff7ed converted to HSL */
+      
+      --success: 140 86% 34.9%; /* #15803d converted to HSL */
+      --success-foreground: 138 94% 95.3%; /* #f0fdf4 converted to HSL */
+      
+      --info: 217 91.1% 63.9%; /* #3b82f6 converted to HSL */
+      --info-foreground: 217 100% 96.1%; /* #eff6ff converted to HSL */
 
       --border: 214.3 31.8% 91.4%;
       --input: 214.3 31.8% 91.4%;

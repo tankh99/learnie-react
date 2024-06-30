@@ -1,5 +1,5 @@
 import "./globals.css";
-import 'quill/dist/quill.snow.css'; // Add css for snow themes
+import 'quill/dist/quill.snow.css'; // Add css for quill snow themes
 
 import React from "react";
 import ReactDOM from "react-dom/client";
@@ -12,6 +12,7 @@ import UpdateNotePage, { loader as noteLoader } from "./pages/notes/update-note-
 import ReviewPage, { loader as reviewLoader } from "./pages/review-page";
 import CreateNotePage from "./pages/notes/create-note-page";
 import HomePage from "./pages/home-page";
+import LoginPage from "./pages/login-page";
 
 
 const queryClient = new QueryClient();
@@ -54,6 +55,10 @@ const router = createBrowserRouter([
             loader: reviewLoader(queryClient)
           }
         ]
+      },
+      {
+        path: "login",
+        element: <LoginPage/>
       }
     ]
   },

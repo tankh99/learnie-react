@@ -12,6 +12,9 @@ export default function HomePage() {
         <Link to="/review">
           <Button>Review</Button>
         </Link>
+        <Link to="/login">
+          <Button>Login</Button>
+        </Link>
       </div>
     </div>
   )

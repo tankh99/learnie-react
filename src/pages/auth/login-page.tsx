@@ -1,5 +1,5 @@
 import LoginForm, { LoginFormValues } from "./components/login-form";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useLogin } from "@/api/hooks/useAuth";
 import { isAuthenticated } from "@/api/hooks/auth";
 
@@ -10,11 +10,9 @@ export default function LoginPage() {
   const login = async  (values: LoginFormValues) => {
     loginMutation.mutate(values);
   }
-  
-  const navigate = useNavigate();
 
   if (isAuthenticated()) {
-    return navigate("/");
+    return <Navigate to="/" replace />
   }
   return (
     <div>

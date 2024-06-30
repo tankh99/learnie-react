@@ -16,7 +16,7 @@ export const useLogin = () => {
         description: "Logged in successfully",
         variant: "success"
       })
-      navigate("/")
+      navigate("/", { replace: true })
       return signinRes;
     },
     onError: (err) => {
@@ -64,7 +64,7 @@ export const useSignout = () => {
         description: "Signed out successfully",
         variant: "success"
       })
-      navigate("/login");
+      navigate("/login", {replace: true});
     },
     onError: (err: any) => {
       toast({

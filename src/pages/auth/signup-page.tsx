@@ -3,26 +3,13 @@ import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '@/lib/firebsae/config'
 import { useToast } from '@/components/ui/use-toast'
 import { Link } from 'react-router-dom'
+import { useSignup } from '@/api/hooks/useAuth'
 
 export default function SignupPage() {
 
-  const {toast} = useToast()
+  const signupMutation = useSignup();
   const signup = async (values: SignupFormValues) => {
-    try {
-      const user = await createUserWithEmailAndPassword(auth, values.email, values.password)
-      toast({
-        variant:"success",
-        title: "Success",
-        description: "Account created successfully"
-      })
-      console.log(user);
-    } catch (err: any) {
-      toast({
-        variant: "destructive",
-        title: "Error",
-        description: err.message
-      })
-    }
+    signupMutation.mutate(values);
   }
 
   return (

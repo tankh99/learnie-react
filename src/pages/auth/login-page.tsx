@@ -1,22 +1,11 @@
-import { auth } from "@/lib/firebsae/config";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import LoginForm from "./components/login-form";
-import { useToast } from "@/components/ui/use-toast";
+import LoginForm, { LoginFormValues } from "./components/login-form";
 import { Link } from "react-router-dom";
+import { useLogin } from "@/api/hooks/useAuth";
 
 export default function LoginPage() {
-  const {toast} = useToast()
-  const login = async  (values: any) => {
-    try {
-      const signinRes = await signInWithEmailAndPassword(auth, values.email, values.password);
-      console.log(signinRes);
-    } catch (err: any) {
-      toast({
-        title: "Error",
-        description: err.message,
-        variant: "destructive",
-      })
-    }
+  const loginMutation = useLogin();
+  const login = async  (values: LoginFormValues) => {
+    loginMutation.mutate(values);
   }
 
   return (

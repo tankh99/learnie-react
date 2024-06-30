@@ -11,6 +11,7 @@ export type NoteRevision = {
     id?: string;
     data: string; // What was changed, in delta
     revisionTime: Date;
+    reviewed: boolean;
     noteId: string;
     note?: Note;
 }
@@ -28,5 +29,6 @@ export function formToNoteRevision(data: NoteFormValues, noteId: string): NoteRe
         data: data.data,
         revisionTime: new Date(),
         noteId,
+        reviewed: false
     }
 }

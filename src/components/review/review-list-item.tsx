@@ -2,12 +2,15 @@ import { deltaToHTML, getStyledQuillDiff } from "@/lib/quill-utils";
 import { NoteRevision } from "@/types/NoteRevision";
 import { Delta } from "quill/core";
 import { Link } from "react-router-dom";
+import { Checkbox } from "../ui/checkbox";
+import { useUpdateNoteRevision } from "@/api/hooks/useNoteRevisions";
 
 type P = {
   noteRevision: NoteRevision;
 }
 
 export default function ReviewListItem({noteRevision}: P) {
+  const updateNoteRevisionMutation = useUpdateNoteRevision(noteRevision.id!);
   /**
    * 
    * @param srcDelta Usually the note revision's delta
@@ -21,11 +24,26 @@ export default function ReviewListItem({noteRevision}: P) {
     return formattedHTML
   }
 
+  const handleReview = () => {
+    updateNoteRevisionMutation.mutate({
+      ...noteRevision,
+      reviewed: !noteRevision.reviewed
+    })
+  }
+
   return (
     <div>
-      <Link to={`/notes/${noteRevision.note!.id}`}>
-        <p className="text-lg font-bold ">{noteRevision.note?.title}</p>
-      </Link>
+      <div className="flex items-center justify-between">
+        <div className="flex flex-col mb-2">
+          <Link to={`/notes/${noteRevision.note!.id}`}>
+            <p className="text-lg font-bold ">{noteRevision.note?.title}</p>
+          </Link>
+          <p className="text-sm text-slate-600 italic">Last updated: {noteRevision.revisionTime.toDateString()}</p>
+        </div>
+        <div className="flex items-center space-x-2">
+        <p>Reviewed:</p> <Checkbox onClick={handleReview} checked={noteRevision.reviewed} />
+        </div>
+      </div>
       <div dangerouslySetInnerHTML={{__html: formatDiff(noteRevision.data, noteRevision.note?.data!)}}></div>
     </div>
   )

@@ -8,3 +8,7 @@ export function getCurrentUser() {
 export function isAuthenticated() {
   return !!getCurrentUser()
 }
+
+export const authenticatedStatus = () => {
+  return !!getCurrentUser()
+}

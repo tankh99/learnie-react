@@ -1,6 +1,6 @@
 import { app } from "@/lib/firebsae/config"
 import { noteRevisionFromFirestore, NoteRevision } from "@/types/NoteRevision";
-import { addDoc, and, collection, doc, getDoc, getDocs, getFirestore, or, orderBy, query, updateDoc, where } from "firebase/firestore"
+import { addDoc, and, collection, deleteDoc, doc, getDoc, getDocs, getFirestore, or, orderBy, query, updateDoc, where } from "firebase/firestore"
 import { getNote } from "./notes";
 import { isToday } from "@/lib/date";
 import { startOfDay, subDays } from 'date-fns'
@@ -150,5 +150,23 @@ export async function createOrUpdateNoteRevision(noteId: string, noteRevision: N
       return noteRevision;
   } catch (err) {
       console.error(err);
+  }
+}
+
+export async function deleteNoteRevisionsWithNoteId(noteId: string) {
+  try {
+
+    const noteRevisionsRef = getNoteRevisionRef();
+    const noteRevisionQuery = query(noteRevisionsRef, where('noteId', '==', noteId));
+    const querySnap = await getDocs(noteRevisionQuery);
+    if (querySnap.empty) {
+      return;
+    }
+    querySnap.docs.forEach(async (doc) => {
+      await deleteDoc(doc.ref)
+    })
+  } catch (err) {
+    console.error(err)
+    throw err
   }
 }

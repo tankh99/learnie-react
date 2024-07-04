@@ -11,6 +11,11 @@ type P = {
 
 export default function NoteListItem({note}: P) {
   const deleteNoteMutation = useDeleteNote(note.id!)
+
+  const onDeleteNote = async () => {
+    await deleteNoteMutation.mutateAsync()
+
+  }
   return (
     <>
       <div className='flex justify-between items-center'>
@@ -29,7 +34,7 @@ export default function NoteListItem({note}: P) {
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction onClick={() => deleteNoteMutation.mutate()}>Delete</AlertDialogAction>
+              <AlertDialogAction onClick={() => onDeleteNote()}>Delete</AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
       </AlertDialog>

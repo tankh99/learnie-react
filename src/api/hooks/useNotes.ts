@@ -3,6 +3,7 @@ import { getNotes, getNote, updateNote, createNote, deleteNote } from "../notes"
 import { Note } from "@/types/Note"
 import { useNavigate } from "react-router"
 import { useToast } from "@/components/ui/use-toast"
+import { deleteNoteRevisionsWithNoteId } from "../noteRevisions"
 
 export const getNotesQuery = (): DefinedInitialDataOptions<Note[], Error> => {
   return {
@@ -65,7 +66,12 @@ export function useDeleteNote(id: string) {
   const queryClient = useQueryClient();
   const toast = useToast();
   return useMutation({
-    mutationFn: () => deleteNote(id),
+    mutationFn: async () => {
+      const deletedNote = await deleteNote(id)
+      // TODO: check if we need to refactor this into its own react query hook
+      await deleteNoteRevisionsWithNoteId(id);
+      return deletedNote;
+    },
     onSuccess: (note) => {
       toast.toast({
         variant: "success",

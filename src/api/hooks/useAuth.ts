@@ -3,7 +3,21 @@ import { auth } from "@/lib/firebsae/config";
 import { LoginFormValues } from "@/pages/auth/components/login-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+
+export const useIsLoggedIn = () => {
+  const [authReady, setAuthReady] = useState(false);
+  const isLoggedIn = auth.currentUser !== null
+  useEffect(() => {
+    const init = async () => {
+      await auth.authStateReady();
+      setAuthReady(true);
+    }
+    init()
+  }, [auth])
+  return [isLoggedIn, authReady]
+}
 
 export const useLogin = () => {
   const { toast } = useToast();
@@ -64,7 +78,7 @@ export const useSignout = () => {
         description: "Signed out successfully",
         variant: "success"
       })
-      navigate("/login", {replace: true});
+      navigate("/login", {replace: true, state: {from: "/"}});
     },
     onError: (err: any) => {
       toast({

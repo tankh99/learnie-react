@@ -1,18 +1,22 @@
 import LoginForm, { LoginFormValues } from "./components/login-form";
-import { Link, Navigate, useNavigate } from "react-router-dom";
-import { useLogin } from "@/api/hooks/useAuth";
-import { isAuthenticated } from "@/api/hooks/auth";
+import { Link, Navigate } from "react-router-dom";
+import { useIsLoggedIn, useLogin } from "@/api/hooks/useAuth";
 
 export default function LoginPage() {
 
   
   const loginMutation = useLogin();
+  const [isLoggedIn, authReady] = useIsLoggedIn();
   const login = async  (values: LoginFormValues) => {
     loginMutation.mutate(values);
   }
 
-  if (isAuthenticated()) {
-    return <Navigate to="/" replace />
+  if (!authReady) {
+    return <div>Loading...</div>
+  }
+
+  if (isLoggedIn) {
+    return <Navigate to="/" replace={true} />
   }
   return (
     <div>

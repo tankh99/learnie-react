@@ -1,11 +1,11 @@
 import { useNavigate } from "react-router"
 import { ChevronLeft } from 'lucide-react'
 import { Button } from "../ui/button";
-import { useSignout } from "@/api/hooks/useAuth";
-import { isAuthenticated } from "@/api/hooks/auth";
+import { useIsLoggedIn, useSignout } from "@/api/hooks/useAuth";
 
 export default function Navbar() {
   const navigate = useNavigate();
+  const [isLoggedIn, authReady] = useIsLoggedIn();
   
   const canGoBack = window.history.length > 2
 
@@ -23,7 +23,7 @@ export default function Navbar() {
         visibility={!canGoBack ? "hidden" : ""} />
       <p className="font-bold">Learnie</p>
       <div>
-        {isAuthenticated() 
+        {isLoggedIn
           ? <Button onClick={onSignOut}>Sign out</Button>
           : ""
         }

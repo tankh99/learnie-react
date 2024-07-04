@@ -36,7 +36,7 @@ export default function ReviewListItem({noteRevision}: P) {
     <div>
       <div className="flex items-center justify-between">
         <div className="flex flex-col mb-1">
-          <Link to={`/notes/${noteRevision.note!.id}`} className="flex space-x-2">
+          <Link to={`/notes/${noteRevision.noteId}`} className="flex space-x-2">
             <p className="text-lg font-bold ">{noteRevision.note?.title}</p>
             {noteRevision.revisionTime <= startOfDay(new Date()) 
             ? <p className="bg-red-300 text-sm flex items-center px-2">Overdue</p>

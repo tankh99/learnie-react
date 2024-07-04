@@ -34,7 +34,7 @@ export function useCreateNote() {
         description: `${note?.title} created successfully`,
       })
       queryClient.invalidateQueries({queryKey: ["notes"]});
-      navigate(-1)
+      navigate("/notes")
     },
     onError: (err) => {
       console.error(err);
@@ -56,7 +56,7 @@ export function useUpdateNote(id: string) {
         description: `${note?.title} has been updated successfully`,
       })
       queryClient.invalidateQueries({queryKey: ["notes", id]});
-      navigate(-1)
+      navigate("/notes")
     },
   })
 }

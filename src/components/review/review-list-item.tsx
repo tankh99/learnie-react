@@ -4,6 +4,7 @@ import { Delta } from "quill/core";
 import { Link } from "react-router-dom";
 import { Checkbox } from "../ui/checkbox";
 import { useUpdateNoteRevision } from "@/api/hooks/useNoteRevisions";
+import { startOfDay } from "date-fns";
 
 type P = {
   noteRevision: NoteRevision;
@@ -34,9 +35,12 @@ export default function ReviewListItem({noteRevision}: P) {
   return (
     <div>
       <div className="flex items-center justify-between">
-        <div className="flex flex-col mb-2">
-          <Link to={`/notes/${noteRevision.note!.id}`}>
+        <div className="flex flex-col mb-1">
+          <Link to={`/notes/${noteRevision.note!.id}`} className="flex space-x-2">
             <p className="text-lg font-bold ">{noteRevision.note?.title}</p>
+            {noteRevision.revisionTime <= startOfDay(new Date()) 
+            ? <p className="bg-red-300 text-sm flex items-center px-2">Overdue</p>
+            : null}
           </Link>
           <p className="text-sm text-slate-600 italic">Last updated: {noteRevision.revisionTime.toDateString()}</p>
         </div>

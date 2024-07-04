@@ -7,7 +7,7 @@ export default function Navbar() {
   const navigate = useNavigate();
   const [isLoggedIn, authReady] = useIsLoggedIn();
   
-  const canGoBack = window.history.length > 2
+  const canGoBack = window.history.state.idx > 0
 
   const signoutMutation = useSignout();
 

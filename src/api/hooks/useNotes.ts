@@ -29,6 +29,7 @@ export function useCreateNote() {
     mutationFn: (note: Note) => createNote(note),
     onSuccess: (note) => {
       toast.toast({
+        variant: "success",
         title: `${note?.title} created`,
         description: `${note?.title} created successfully`,
       })
@@ -50,6 +51,7 @@ export function useUpdateNote(id: string) {
     mutationFn: (note: Note) => updateNote(id, note),
     onSuccess: (note) => {
       toast.toast({
+        variant: "success",
         title: "Note updated",
         description: `${note?.title} has been updated successfully`,
       })
@@ -66,6 +68,7 @@ export function useDeleteNote(id: string) {
     mutationFn: () => deleteNote(id),
     onSuccess: (note) => {
       toast.toast({
+        variant: "success",
         title: "Note deleted",
         description: `${note?.title} has been deleted successfully`,
       })
